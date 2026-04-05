@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nykaa - Beauty, Makeup, Skincare & More</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-bar-track">
+      <span>🚚 Free Delivery on orders above ₹399</span>
+      <span>💄 New Arrivals: Summer Collection 2024</span>
+      <span>🎁 Buy 2 Get 1 Free on Nykaa Beauty</span>
+      <span>✨ Up to 50% OFF on Skincare | Use Code: SKIN50</span>
+      <span>🚚 Free Delivery on orders above ₹399</span>
+      <span>💄 New Arrivals: Summer Collection 2024</span>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header id="navbar">
+    <div class="nav-top">
+      <div class="nav-left">
+        <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()">&#9776;</button>
+        <a href="#" class="logo">
+          <span class="logo-n">N</span><span class="logo-ykaa">ykaa</span>
+        </a>
+      </div>
+      <div class="search-box" id="searchBox">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" id="searchInput" placeholder="Search for products, brands and more..."
+          oninput="handleSearch(this.value)"
+          onfocus="showSearchDropdown()"
+          onblur="hideSearchDropdown()" />
+        <button class="search-btn" onclick="triggerSearch()">Search</button>
+        <div class="search-dropdown" id="searchDropdown"></div>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-action-btn" onclick="showToast('Coming Soon: Nykaa App!')">
+          <span class="icon">📱</span><span class="label">Get App</span>
+        </button>
+        <button class="nav-action-btn" onclick="openLoginModal()">
+          <span class="icon">👤</span><span class="label">Profile</span>
+        </button>
+        <button class="nav-action-btn" onclick="showToast('❤️ Wishlist: ' + wishlist.size + ' items')">
+          <span class="icon">♡</span><span class="label">Wishlist</span>
+        </button>
+        <button class="nav-action-btn cart-btn" onclick="openCart()">
+          <span class="icon">🛒</span>
+          <span class="cart-count" id="cartCount">0</span>
+          <span class="label">Bag</span>
+        </button>
+      </div>
+    </div>
+    <nav class="nav-cats">
+      <a href="#" onclick="filterCategory('makeup')">Makeup</a>
+      <a href="#" onclick="filterCategory('skincare')">Skincare</a>
+      <a href="#" onclick="filterCategory('haircare')">Hair</a>
+      <a href="#" onclick="filterCategory('fragrance')">Fragrance</a>
+      <a href="#" onclick="filterCategory('nails')">Nails</a>
+      <a href="#" onclick="filterCategory('wellness')">Wellness</a>
+      <a href="#" onclick="filterCategory('men')">Men</a>
+      <a href="#" onclick="filterCategory('luxury')">Luxury</a>
+      <a href="#" class="sale-link" onclick="filterCategory('all')">Sale 🔥</a>
+    </nav>
+  </header>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="logo"><span class="logo-n">N</span><span class="logo-ykaa">ykaa</span></span>
+      <button onclick="toggleSidebar()">✕</button>
+    </div>
+    <ul class="sidebar-links">
+      <li><a href="#" onclick="filterCategory('makeup');toggleSidebar()">💄 Makeup</a></li>
+      <li><a href="#" onclick="filterCategory('skincare');toggleSidebar()">🧴 Skincare</a></li>
+      <li><a href="#" onclick="filterCategory('haircare');toggleSidebar()">💆 Hair</a></li>
+      <li><a href="#" onclick="filterCategory('fragrance');toggleSidebar()">🌸 Fragrance</a></li>
+      <li><a href="#" onclick="filterCategory('nails');toggleSidebar()">💅 Nails</a></li>
+      <li><a href="#" onclick="filterCategory('wellness');toggleSidebar()">🌿 Wellness</a></li>
+      <li><a href="#" onclick="filterCategory('men');toggleSidebar()">🧔 Men</a></li>
+      <li><a href="#" onclick="filterCategory('luxury');toggleSidebar()">✨ Luxury</a></li>
+    </ul>
+  </aside>
+
+  <!-- HERO SLIDER -->
+  <section class="hero-slider">
+    <div class="hero-slides" id="heroSlides">
+      <div class="hero-slide slide-1">
+        <div class="hero-text">
+          <div class="hero-tag">NEW LAUNCH</div>
+          <h1>Summer Glow<br/>Collection 2024</h1>
+          <p>Radiant skin all season long.<br/>Up to 40% OFF on top brands.</p>
+          <button class="hero-cta" onclick="filterCategory('skincare');scrollToProducts()">Shop Now</button>
+        </div>
+        <div class="hero-img-wrap">
+          <img src="https://images-static.nykaa.com/media/fw/banner/2024/banner-skincare.jpg"
+               onerror="this.style.display='none'"
+               alt="Skincare Collection" class="hero-product-img" />
+        </div>
+      </div>
+      <div class="hero-slide slide-2">
+        <div class="hero-text">
+          <div class="hero-tag">TRENDING</div>
+          <h1>Bold Lips,<br/>Bolder You</h1>
+          <p>New lipstick shades just dropped.<br/>Over 200 shades to explore.</p>
+          <button class="hero-cta" onclick="filterCategory('makeup');scrollToProducts()">Explore Now</button>
+        </div>
+        <div class="hero-img-wrap">
+          <img src="https://images-static.nykaa.com/media/fw/banner/2024/banner-makeup.jpg"
+               onerror="this.style.display='none'"
+               alt="Makeup Collection" class="hero-product-img" />
+        </div>
+      </div>
+      <div class="hero-slide slide-3">
+        <div class="hero-text">
+          <div class="hero-tag">BEST SELLER</div>
+          <h1>Luxury Fragrances<br/>Under ₹999</h1>
+          <p>Smell premium, spend less.<br/>Top international perfume brands.</p>
+          <button class="hero-cta" onclick="filterCategory('fragrance');scrollToProducts()">Discover</button>
+        </div>
+        <div class="hero-img-wrap">
+          <img src="https://images-static.nykaa.com/media/fw/banner/2024/banner-fragrance.jpg"
+               onerror="this.style.display='none'"
+               alt="Fragrance Collection" class="hero-product-img" />
+        </div>
+      </div>
+    </div>
+    <button class="hero-prev" onclick="changeSlide(-1)">&#8249;</button>
+    <button class="hero-next" onclick="changeSlide(1)">&#8250;</button>
+    <div class="hero-dots" id="heroDots">
+      <span class="dot active" onclick="goToSlide(0)"></span>
+      <span class="dot" onclick="goToSlide(1)"></span>
+      <span class="dot" onclick="goToSlide(2)"></span>
+    </div>
+  </section>
+
+  <!-- CATEGORY ICONS -->
+  <section class="cat-icons">
+    <h2 class="section-title">Shop by Category</h2>
+    <div class="cat-grid">
+      <div class="cat-item" onclick="filterCategory('makeup');scrollToProducts()">
+        <div class="cat-circle" style="background:#ffe4f0;">
+          <img src="https://images-static.nykaa.com/nykdesignstudio-images/pub/media/catalog/category/makeup-icon.png" onerror="this.outerHTML='💄'" alt="Makeup" />
+        </div><span>Makeup</span>
+      </div>
+      <div class="cat-item" onclick="filterCategory('skincare');scrollToProducts()">
+        <div class="cat-circle" style="background:#e8f4fd;">
+          <img src="https://images-static.nykaa.com/nykdesignstudio-images/pub/media/catalog/category/skincare-icon.png" onerror="this.outerHTML='🧴'" alt="Skincare" />
+        </div><span>Skincare</span>
+      </div>
+      <div class="cat-item" onclick="filterCategory('haircare');scrollToProducts()">
+        <div class="cat-circle" style="background:#fff3e0;">
+          <img src="https://images-static.nykaa.com/nykdesignstudio-images/pub/media/catalog/category/hair-icon.png" onerror="this.outerHTML='💆'" alt="Haircare" />
+        </div><span>Haircare</span>
+      </div>
+      <div class="cat-item" onclick="filterCategory('fragrance');scrollToProducts()">
+        <div class="cat-circle" style="background:#f3e8ff;">
+          <img src="https://images-static.nykaa.com/nykdesignstudio-images/pub/media/catalog/category/fragrance-icon.png" onerror="this.outerHTML='🌸'" alt="Fragrance" />
+        </div><span>Fragrance</span>
+      </div>
+      <div class="cat-item" onclick="filterCategory('nails');scrollToProducts()">
+        <div class="cat-circle" style="background:#fce4ec;">
+          <img src="https://images-static.nykaa.com/nykdesignstudio-images/pub/media/catalog/category/nails-icon.png" onerror="this.outerHTML='💅'" alt="Nails" />
+        </div><span>Nails</span>
+      </div>
+      <div class="cat-item" onclick="filterCategory('wellness');scrollToProducts()">
+        <div class="cat-circle" style="background:#e8f5e9;">
+          <img src="https://images-static.nykaa.com/nykdesignstudio-images/pub/media/catalog/category/wellness-icon.png" onerror="this.outerHTML='🌿'" alt="Wellness" />
+        </div><span>Wellness</span>
+      </div>
+      <div class="cat-item" onclick="filterCategory('men');scrollToProducts()">
+        <div class="cat-circle" style="background:#e3f2fd;">
+          <img src="https://images-static.nykaa.com/nykdesignstudio-images/pub/media/catalog/category/men-icon.png" onerror="this.outerHTML='🧔'" alt="Men" />
+        </div><span>Men</span>
+      </div>
+      <div class="cat-item" onclick="filterCategory('luxury');scrollToProducts()">
+        <div class="cat-circle" style="background:#fff8e1;">
+          <img src="https://images-static.nykaa.com/nykdesignstudio-images/pub/media/catalog/category/luxury-icon.png" onerror="this.outerHTML='✨'" alt="Luxury" />
+        </div><span>Luxury</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFERS STRIP -->
+  <section class="offers-strip">
+    <div class="offer-card" style="background:linear-gradient(135deg,#ff6b9d,#ff8fab);">
+      <div class="offer-icon">💄</div>
+      <div><div class="offer-title">Makeup Sale</div><div class="offer-sub">Up to 50% OFF</div></div>
+      <button onclick="filterCategory('makeup');scrollToProducts()">Shop →</button>
+    </div>
+    <div class="offer-card" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">
+      <div class="offer-icon">🌿</div>
+      <div><div class="offer-title">Skincare Fest</div><div class="offer-sub">Min 30% OFF</div></div>
+      <button onclick="filterCategory('skincare');scrollToProducts()">Shop →</button>
+    </div>
+    <div class="offer-card" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">
+      <div class="offer-icon">✨</div>
+      <div><div class="offer-title">Luxury Picks</div><div class="offer-sub">Starting ₹499</div></div>
+      <button onclick="filterCategory('luxury');scrollToProducts()">Shop →</button>
+    </div>
+  </section>
+
+  <!-- BRAND SPOTLIGHT -->
+  <section class="brand-spotlight">
+    <h2 class="section-title">Brand Spotlight</h2>
+    <div class="brand-cards-scroll" id="brandCardsScroll">
+      <div class="brand-card" onclick="filterBrand('Lakme')">
+        <img src="https://images-static.nykaa.com/uploads/brandimages/brand-lakme.jpg"
+             onerror="this.src='https://via.placeholder.com/140x80/ffe4f0/fc2779?text=Lakme'"
+             alt="Lakme" />
+        <div class="brand-card-name">Lakme</div>
+        <div class="brand-card-sub">India's #1 Beauty Brand</div>
+      </div>
+      <div class="brand-card" onclick="filterBrand('Maybelline')">
+        <img src="https://images-static.nykaa.com/uploads/brandimages/brand-maybelline.jpg"
+             onerror="this.src='https://via.placeholder.com/140x80/fff0f5/fc2779?text=Maybelline'"
+             alt="Maybelline" />
+        <div class="brand-card-name">Maybelline</div>
+        <div class="brand-card-sub">Made for All</div>
+      </div>
+      <div class="brand-card" onclick="filterBrand('MAC')">
+        <img src="https://images-static.nykaa.com/uploads/brandimages/brand-mac.jpg"
+             onerror="this.src='https://via.placeholder.com/140x80/111/fff?text=MAC'"
+             alt="MAC" />
+        <div class="brand-card-name">MAC</div>
+        <div class="brand-card-sub">Pro Makeup Artistry</div>
+      </div>
+      <div class="brand-card" onclick="filterBrand('Cetaphil')">
+        <img src="https://images-static.nykaa.com/uploads/brandimages/brand-cetaphil.jpg"
+             onerror="this.src='https://via.placeholder.com/140x80/e8f4fd/333?text=Cetaphil'"
+             alt="Cetaphil" />
+        <div class="brand-card-name">Cetaphil</div>
+        <div class="brand-card-sub">Gentle Skincare</div>
+      </div>
+      <div class="brand-card" onclick="filterBrand('Minimalist')">
+        <img src="https://images-static.nykaa.com/uploads/brandimages/brand-minimalist.jpg"
+             onerror="this.src='https://via.placeholder.com/140x80/f5f5f5/333?text=Minimalist'"
+             alt="Minimalist" />
+        <div class="brand-card-name">Minimalist</div>
+        <div class="brand-card-sub">Science-Backed Skincare</div>
+      </div>
+      <div class="brand-card" onclick="filterBrand('Mamaearth')">
+        <img src="https://images-static.nykaa.com/uploads/brandimages/brand-mamaearth.jpg"
+             onerror="this.src='https://via.placeholder.com/140x80/e8f5e9/2ea84a?text=Mamaearth'"
+             alt="Mamaearth" />
+        <div class="brand-card-name">Mamaearth</div>
+        <div class="brand-card-sub">Toxin Free Beauty</div>
+      </div>
+      <div class="brand-card" onclick="filterBrand('Clinique')">
+        <img src="https://images-static.nykaa.com/uploads/brandimages/brand-clinique.jpg"
+             onerror="this.src='https://via.placeholder.com/140x80/e8f4fd/333?text=Clinique'"
+             alt="Clinique" />
+        <div class="brand-card-name">Clinique</div>
+        <div class="brand-card-sub">Allergy Tested</div>
+      </div>
+      <div class="brand-card" onclick="filterBrand('WOW Skin Science')">
+        <img src="https://images-static.nykaa.com/uploads/brandimages/brand-wow.jpg"
+             onerror="this.src='https://via.placeholder.com/140x80/fff3e0/f59e0b?text=WOW'"
+             alt="WOW" />
+        <div class="brand-card-name">WOW</div>
+        <div class="brand-card-sub">Natural Ingredients</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS SECTION -->
+  <section class="products-section" id="productsSection">
+    <div class="filter-bar">
+      <div class="filter-pills" id="filterPills">
+        <button class="fpill active" onclick="filterCategory('all',this)">All</button>
+        <button class="fpill" onclick="filterCategory('makeup',this)">Makeup</button>
+        <button class="fpill" onclick="filterCategory('skincare',this)">Skincare</button>
+        <button class="fpill" onclick="filterCategory('haircare',this)">Haircare</button>
+        <button class="fpill" onclick="filterCategory('fragrance',this)">Fragrance</button>
+        <button class="fpill" onclick="filterCategory('nails',this)">Nails</button>
+        <button class="fpill" onclick="filterCategory('wellness',this)">Wellness</button>
+        <button class="fpill" onclick="filterCategory('men',this)">Men</button>
+        <button class="fpill" onclick="filterCategory('luxury',this)">Luxury</button>
+      </div>
+      <div class="sort-box">
+        <label>Sort:</label>
+        <select id="sortSelect" onchange="sortProducts(this.value)">
+          <option value="default">Featured</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Top Rated</option>
+          <option value="discount">Max Discount</option>
+        </select>
+      </div>
+    </div>
+    <div class="section-heading-row">
+      <h2 class="section-title" id="productsTitle">All Products</h2>
+      <span class="result-count" id="resultCount"></span>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+  </section>
+
+  <!-- BLOG SECTION -->
+  <section class="blog-section">
+    <h2 class="section-title">Beauty Tips & Trends</h2>
+    <div class="blog-grid">
+      <div class="blog-card" onclick="showToast('Opening article...')">
+        <div class="blog-img" style="background:linear-gradient(135deg,#ff6b9d,#ffb3d1);">
+          <img src="https://images-static.nykaa.com/media/fw/banner/blog-makeup.jpg"
+               onerror="this.outerHTML='<span style=font-size:3rem>💄</span>'" alt="Makeup Tips" />
+        </div>
+        <div class="blog-body">
+          <span class="blog-tag">Makeup</span>
+          <h3>5 Monsoon Makeup Tips That Actually Work</h3>
+          <p>Keep your makeup intact through rain and humidity with these expert tricks.</p>
+          <span class="blog-read">Read More →</span>
+        </div>
+      </div>
+      <div class="blog-card" onclick="showToast('Opening article...')">
+        <div class="blog-img" style="background:linear-gradient(135deg,#7c3aed,#c4b5fd);">
+          <img src="https://images-static.nykaa.com/media/fw/banner/blog-skincare.jpg"
+               onerror="this.outerHTML='<span style=font-size:3rem>🧴</span>'" alt="Skincare Guide" />
+        </div>
+        <div class="blog-body">
+          <span class="blog-tag">Skincare</span>
+          <h3>The Ultimate Guide to Layering Skincare Products</h3>
+          <p>Get the order right to maximise the benefits of your skincare routine.</p>
+          <span class="blog-read">Read More →</span>
+        </div>
+      </div>
+      <div class="blog-card" onclick="showToast('Opening article...')">
+        <div class="blog-img" style="background:linear-gradient(135deg,#f59e0b,#fde68a);">
+          <img src="https://images-static.nykaa.com/media/fw/banner/blog-hair.jpg"
+               onerror="this.outerHTML='<span style=font-size:3rem>💆</span>'" alt="Hair Tips" />
+        </div>
+        <div class="blog-body">
+          <span class="blog-tag">Haircare</span>
+          <h3>10 Haircare Ingredients You Should Know About</h3>
+          <p>From keratin to argan oil — decode your hair product labels like a pro.</p>
+          <span class="blog-read">Read More →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-col">
+        <div class="footer-logo"><span class="logo-n">N</span><span class="logo-ykaa">ykaa</span></div>
+        <p>India's leading beauty & wellness destination. Shop authentic products from 2000+ brands.</p>
+        <div class="footer-social">
+          <button onclick="showToast('Opening Instagram')">📸</button>
+          <button onclick="showToast('Opening Facebook')">👥</button>
+          <button onclick="showToast('Opening YouTube')">▶</button>
+          <button onclick="showToast('Opening Pinterest')">📌</button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About Us</a><a href="#">Careers</a>
+        <a href="#">Press</a><a href="#">Nykaa Stores</a>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <a href="#">Track Order</a><a href="#">Returns & Refunds</a>
+        <a href="#">FAQs</a><a href="#">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Top Categories</h4>
+        <a href="#" onclick="filterCategory('makeup')">Makeup</a>
+        <a href="#" onclick="filterCategory('skincare')">Skincare</a>
+        <a href="#" onclick="filterCategory('haircare')">Haircare</a>
+        <a href="#" onclick="filterCategory('fragrance')">Fragrance</a>
+        <a href="#" onclick="filterCategory('wellness')">Wellness</a>
+      </div>
+      <div class="footer-col">
+        <h4>Newsletter</h4>
+        <p>Get beauty tips and exclusive offers!</p>
+        <div class="newsletter">
+          <input type="email" placeholder="Your email" id="newsletterEmail" />
+          <button onclick="subscribeNewsletter()">Subscribe</button>
+        </div>
+        <h4 style="margin-top:16px;">Download App</h4>
+        <div class="app-btns">
+          <button class="app-btn" onclick="showToast('Redirecting to Play Store')">▶ Google Play</button>
+          <button class="app-btn" onclick="showToast('Redirecting to App Store')"> Apple Store</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Nykaa Clone | AWS EC2 + Nginx | LinkedIn Portfolio Project</p>
+      <div class="footer-pay">
+        <span>💳 Visa</span><span>💳 Mastercard</span>
+        <span>📱 UPI</span><span>🏦 Net Banking</span><span>💰 EMI</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PRODUCT MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
+    <div class="modal" id="productModal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-inner">
+        <div class="modal-img-wrap" id="modalImgWrap">
+          <img id="modalProductImg" src="" alt="" />
+          <div class="modal-badge-wrap" id="modalBadge"></div>
+          <div class="modal-img-emoji" id="modalImgEmoji" style="display:none;"></div>
+        </div>
+        <div class="modal-details">
+          <div class="modal-brand" id="modalBrand"></div>
+          <h2 class="modal-title" id="modalTitle"></h2>
+          <div class="modal-rating-row">
+            <span class="stars" id="modalStars"></span>
+            <span class="modal-reviews" id="modalReviews"></span>
+          </div>
+          <div class="modal-price-row">
+            <span class="modal-price" id="modalPrice"></span>
+            <span class="modal-mrp" id="modalMrp"></span>
+            <span class="modal-discount" id="modalDiscount"></span>
+          </div>
+          <p class="modal-desc" id="modalDesc"></p>
+          <div class="modal-tags" id="modalTags"></div>
+          <div class="modal-actions">
+            <button class="btn-wishlist" id="modalWishBtn" onclick="toggleWish(this)">♡ Wishlist</button>
+            <button class="btn-cart" onclick="addToCartFromModal()">🛒 Add to Bag</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>My Bag</h3>
+      <button onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty" id="cartEmpty">
+        <span style="font-size:3rem;">🛒</span>
+        <p>Your bag is empty</p>
+        <button onclick="closeCart()">Continue Shopping</button>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-total">Total: <strong id="cartTotal">₹0</strong></div>
+      <button class="btn-checkout" onclick="showToast('🎉 Order placed! (Demo)')">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal-overlay" id="loginOverlay" onclick="closeLoginOnBg(event)">
+    <div class="modal login-modal" id="loginModal">
+      <button class="modal-close" onclick="closeLoginModal()">✕</button>
+      <div class="login-inner">
+        <div class="login-logo"><span class="logo-n">N</span><span class="logo-ykaa">ykaa</span></div>
+        <h2>Login / Sign Up</h2>
+        <p>Get access to your wishlist, orders & exclusive offers</p>
+        <div class="login-form">
+          <input type="tel" placeholder="Enter Mobile Number" id="loginPhone" maxlength="10" />
+          <button class="btn-otp" onclick="sendOTP()">Send OTP</button>
+          <div class="login-divider">— or continue with —</div>
+          <button class="btn-google" onclick="showToast('Google Sign-In coming soon!')">🔍 Continue with Google</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- BACK TO TOP -->
+  <button class="back-top" id="backTop" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
